@@ -6,3 +6,11 @@
     box-sizing: border-box;
     font-family: 'roboto';
 }
+
+:root {
+    --verde: #45936B; /* confirma */
+    --vermelho: #ED562D; /* cancelar */
+    --branco: #fff /* votar em branco */
+    --botao-fundo: #363533
+    --bg: #B3B3B1; 
+}
