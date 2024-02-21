@@ -13,6 +13,7 @@
   --branco: #fff; /* votar em branco */
   --botao-fundo: #363533;
   --bg: #b3b3b1;
+  --border-card: 15px; /* tamanho padrão do border radius */
 }
 
 .login-main {
@@ -30,7 +31,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  border-radius: 15px;
+  border-radius: var(--border-card);
   background-color: var(--bg);
 }
 
@@ -38,7 +39,7 @@ input {
   width: 40%;
   height: 2.5rem;
   margin: 7px;
-  border-radius: 15px;
+  border-radius: var(--border-card);
   padding: 10px;
   border: none;
 }
@@ -47,6 +48,6 @@ input {
   background-color: var(--verde);
   margin-top: 15px;
   padding: 10px;
-  border-radius: 15px;
-
+  border-radius: var(--border-card);
+  text-transform: uppercase;
 }
