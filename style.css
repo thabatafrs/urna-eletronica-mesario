@@ -1,16 +1,52 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
 
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: 'roboto';
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: roboto;
 }
 
 :root {
-    --verde: #45936B; /* confirma */
-    --vermelho: #ED562D; /* cancelar */
-    --branco: #fff /* votar em branco */
-    --botao-fundo: #363533
-    --bg: #B3B3B1; 
+  --verde: #45936b; /* confirma */
+  --vermelho: #ed562d; /* cancelar */
+  --branco: #fff; /* votar em branco */
+  --botao-fundo: #363533;
+  --bg: #b3b3b1;
+}
+
+.login-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.login-dados {
+  border: 3px solid var(--botao-fundo);
+  width: 30%;
+  height: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 15px;
+  background-color: var(--bg);
+}
+
+input {
+  width: 40%;
+  height: 2.5rem;
+  margin: 7px;
+  border-radius: 15px;
+  padding: 10px;
+  border: none;
+}
+
+.entrar {
+  background-color: var(--verde);
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 15px;
+
 }
