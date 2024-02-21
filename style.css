@@ -24,7 +24,7 @@
 }
 
 .login-dados {
-  border: 3px solid var(--botao-fundo);
+  border: 2px solid var(--botao-fundo);
   width: 30%;
   height: 40%;
   display: flex;
@@ -36,7 +36,7 @@
 }
 
 input {
-  width: 40%;
+  width: 50%;
   height: 2.5rem;
   margin: 7px;
   border-radius: var(--border-card);
@@ -45,9 +45,18 @@ input {
 }
 
 .entrar {
+  width: 50%;
   background-color: var(--verde);
   margin-top: 15px;
   padding: 10px;
   border-radius: var(--border-card);
   text-transform: uppercase;
+  font-weight: bold;
+  border: 1px solid var(--botao-fundo);
+  cursor: pointer;
+}
+
+.entrar:hover {
+  background-color: #386e52;
+  transition: 300ms;
 }
