@@ -13,6 +13,11 @@ function hubSair() {
   location.href = "index.html";
 }
 
+function entrarContagem() {
+  document.getElementById("entrarContagem");
+  location.href = "contagem.html";
+}
+
 function entrarUrna() {
   document.getElementById("id_eleitor");
   location.href = "id_eleitor.html";

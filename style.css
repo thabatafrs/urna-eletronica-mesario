@@ -64,13 +64,12 @@ input {
 /* HUB */
 
 .sair {
-  width: 15%;
+  width: 7%;
+  height: 4%;
   background-color: var(--vermelho);
   position: fixed;
-  bottom: 3px;
-  right: 3px;
-  margin-right: 3px;
-  margin-bottom: 3px;
+  top: 63%;
+  left: 57%;
 }
 
 .sair:hover {
@@ -103,9 +102,43 @@ input {
 
 .voltar_button {
   position: fixed;
-  bottom: -85px;
-  right: -180px;
+  top: 54%;
+  left: 46%;
   height: auto;
-  transform: scale(0.3);
+  transform: scale(0.25);
   cursor: pointer;
+}
+
+/* contagem da urna */
+.contagem {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 5rem;
+  padding-top: 4rem;
+}
+
+.zerar {
+  width: 10%;
+  background: yellow;
+  position: fixed;
+  right: 55%;
+  top: 23%;
+}
+
+.zerar:hover {
+  background-color: rgb(197, 197, 30);
+  transition: 300ms;
+}
+
+h2 {
+  text-transform: uppercase;
+}
+
+li {
+  text-decoration: none;
+  list-style: none;
+  margin: 10px;
+  text-align: center;
 }
