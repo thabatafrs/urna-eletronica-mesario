@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hub da Urna</title>
     <link rel="stylesheet" href="style.css" />
-</head>
-<body>
+  </head>
+  <body>
+    
+    <div class="container">
 
-    <div class="Hub_main">
-
-        <div class="janela">
-            <button class="button_hub">URNA</button>
-            <a class="button_hub" href="id_eleitor.html">INICIAR PROCESSO</a>
-        </div>
-
-        <a class="sair_button" href="index.html">Sair</a>
-        
+      <div class="janela">
+        <button class="botao">URNA</button>
+        <button id="hub" class="botao" onclick="iniciarProcesso()">
+          Iniciar Processo
+        </button>
+      </div>
+      <button id="hubSair" class="botao sair" onclick="hubSair()">Sair</button>
 
     </div>
-    
-</body>
+    <script src="main.js"></script>
+  </body>
 </html>

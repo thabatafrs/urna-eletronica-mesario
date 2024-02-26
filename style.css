@@ -16,7 +16,7 @@
   --border-card: 15px; /* tamanho padrão do border radius */
 }
 
-.login-main {
+.container {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -44,7 +44,7 @@ input {
   border: none;
 }
 
-.entrar {
+.botao {
   width: 50%;
   background-color: var(--verde);
   margin-top: 15px;
@@ -56,83 +56,36 @@ input {
   cursor: pointer;
 }
 
-.entrar:hover {
+.botao:hover {
   background-color: #386e52;
   transition: 300ms;
 }
 
 /* HUB */
 
-.Hub_main {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-}
-
-.button_hub {
-  width: 50%;
-  background-color: var(--verde);
-  margin-top: 15px;
-  padding: 10px;
-  border-radius: var(--border-card);
-  text-transform: uppercase;
-  font-weight: bold;
-  border: 1px solid var(--botao-fundo);
-  cursor: pointer;
-  text-decoration: none;
-  text-align: center;
-  color: black;
-  text-decoration: none;
-}
-
-.button_hub:hover {
-  background-color: #386e52;
-  transition: 300ms;
-}
-
-.sair_button {
+.sair {
   width: 15%;
   background-color: var(--vermelho);
-  padding: 7px;
-  border-radius: var(--border-card);
-  text-transform: uppercase;
-  font-weight: bold;
-  border: 1px solid var(--botao-fundo);
-  cursor: pointer;
   position: fixed;
-  bottom: 3px; 
-  right: 3px; 
-  margin-right: 3px; 
-  margin-bottom: 3px; 
-  text-decoration: none;
-  text-align: center;
-  color: black;
+  bottom: 3px;
+  right: 3px;
+  margin-right: 3px;
+  margin-bottom: 3px;
 }
 
-.sair_button:hover {
+.sair:hover {
   background-color: #9b3b20;
   transition: 300ms;
 }
 
 /* id_eleitor */
 
-.Entrar_button {
-  width: 25%;
-  background-color: var(--verde);
-  margin-top: 15px;
-  padding: 10px 2px; 
-  border-radius: var(--border-card);
-  text-transform: uppercase;
-  font-weight: bold;
-  border: 1px solid var(--botao-fundo);
-  cursor: pointer;
-  text-decoration: none;
-  text-align: center;
-  color: black;
+.botaoID {
+  width: 40%;
   position: absolute;
   bottom: 0;
-  right: 10px; 
+  right: 10px;
+  margin-bottom: 10px;
 }
 
 .janela_id {
@@ -150,9 +103,9 @@ input {
 
 .voltar_button {
   position: fixed;
-  bottom: -90px; 
-  right: -180px; 
-  height: auto; 
+  bottom: -85px;
+  right: -180px;
+  height: auto;
   transform: scale(0.3);
   cursor: pointer;
 }

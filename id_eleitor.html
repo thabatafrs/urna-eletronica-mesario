@@ -7,15 +7,16 @@
     <link rel="stylesheet" href="style.css"/>
  </head>
  <body>
-    <div class="Hub_main">
+    <div class="container">
 
-        <div class="janela_id ">
-            <input type="id_eleitor" name="id_eleitor" id="id_eleitor" placeholder="id do eleitor">
-            <a class="Entrar_button" href="id_eleitor.html">Entrar</a>
+        <div class="janela_id">
+            <input type="number" name="id_eleitor" id="id_eleitor" placeholder="id do eleitor">
+            <button id="id_eleitor" class="botao botaoID" onclick="entrarUrna()">Entrar</button>
         </div>
 
         <a class="voltar_button" href="hub.html" src>
             <img src="image/icons/voltar_button.png" alt="Voltar">
         </a>
+        <script src="main.js"></script>
  </body>
  </html>
