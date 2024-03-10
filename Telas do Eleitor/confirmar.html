@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="container">
+        <div class="janela_confirma">
+            <div class="foto do candidato">
+                <img id="foto_chapa" src="placeholder.jpg" alt="Foto da Chapa">
+            </div>
+            <p id="numero_chapa"></p>
+            <div class="botoes_container">
+                <button class="botao_confirma" id="confirma" tabindex="1" onclick="confirma()">confirmar</button>
+                <button class="botao_cancela" id="cancela" tabindex="2" onclick="cancelar()">cancelar</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="main.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const params = new URLSearchParams(window.location.search);
+        const numeroChapa = params.get('numero');
+        const numeroChapaElement = document.getElementById('numero_chapa');
+        
+        if (numeroChapa === 'BRANCO') {
+            numeroChapaElement.textContent = 'Você selecionou BRANCO.';
+            document.getElementById('foto_chapa').style.display = 'none';
+        } else if (numeroChapa) {
+            numeroChapaElement.textContent = `Você digitou o número da chapa: ${numeroChapa}.`;
+        } else {
+            numeroChapaElement.textContent = 'Nenhum número de chapa foi especificado.';
+        }
+    });
+
+    window.addEventListener('keydown', function(e) {
+    if (e.key === 'Tab') {
+        e.preventDefault();
+        const botao_confirma = document.querySelector('.botao_confirma');
+        const botao_cancela = document.querySelector('.botao_cancela');
+        if (botao_cancela === document.activeElement) {
+            botao_confirma.focus();
+        } else {
+            botao_cancela.focus();
+        }
+    }
+}); 
+</script>
+</html>
