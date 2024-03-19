@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,33 +8,47 @@
   </head>
   <body>
     <div class="container">
-
-        <button class="botao zerar">Zerar Urna</button>
+      <button class="botao zerar" onclick="zerarLista()">Zerar Urna</button>
 
       <div class="janela contagem">
         <div class="chapa">
-          <h2>Chapa</h2>
-          <ul>
-            <li>nome1</li>
-            <li>nome2</li>
-            <li>nome3</li>
-          </ul>
-        </div>
-
-        <div class="votos">
           <h2>Votos</h2>
-          <ul class="votos">
-            <li>65</li>
-            <li>12</li>
-            <li>8</li>
-          </ul>
+          <ul class="listaVotos" id="listaVotos"></ul>
         </div>
       </div>
     </div>
-    <a class="voltar_button" href="hub.html" src>
-      <img src="image/icons/voltar_button.png" alt="Voltar" />
+    <a class="voltar_button" href="./hub.html" src>
+      <img src="./../image/icons/voltar_button.png" alt="Voltar" />
     </a>
 
     <script src="main.js"></script>
+    <script>
+      function carregarVotos() {
+        fetch("http://localhost:8080/voto")
+          .then((response) => response.json())
+          .then((data) => {
+            const listaVotos = document.getElementById("listaVotos");
+            listaVotos.innerHTML = "";
+
+            data.forEach((item) => {
+              const li = document.createElement("li");
+              li.textContent = `Nome: ${item.nome} - Total de Votos: ${item.totalVotos}`;
+              listaVotos.appendChild(li);
+            });
+          })
+          .catch((error) => {
+            console.error("Erro ao carregar a lista de votos:", error);
+          });
+      }
+
+      function zerarLista() {
+        fetch("http://localhost:8080/voto", {
+          method: "DELETE",
+        })
+        console.log("zerar urna");
+        window.location.reload;
+      }
+      document.addEventListener("domcontentloaded", carregarVotos);
+    </script>
   </body>
 </html>
