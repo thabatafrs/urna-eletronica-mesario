@@ -9,21 +9,21 @@
   <body>
     <div class="container">
       <div class="janela">
-        <form id="registerForm">
-          <label for="register">Username:</label><br>
-          <input type="text" id="register" name="register"><br>
-          <label for="registerPassword">Password:</label><br>
-          <input type="password" id="registerPassword" name="registerPassword"><br><br>
-          <label for="role">Role:</label><br>
+        <form class="formContainer" id="registerForm">
+          <label for="register">Nome:</label>
+          <input type="text" id="register" name="register">
+          <label for="registerPassword">Senha:</label>
+          <input type="password" id="registerPassword" name="registerPassword">
+          <label for="role">Função:</label>
           <select id="role" name="role">
-              <option value="ADMIN">Admin</option>
-              <option value="USER">User</option>
-          </select><br><br>
-          <button type="submit">Register</button>
+              <option value="ADMIN">Administrador</option>
+              <option value="USER">Usuário</option>
+          </select><br>
+          <button class="botao cadastrar" type="submit">Cadastrar</button>
+          <button id="hubSair" class="botao sair" onclick="hubSair()">Voltar</button>
       </form>
-        <button class="botao" id="entrar" onclick="entrar()">Cadastrar</button>
-        <button id="hubSair" class="botao sair" onclick="hubSair()">Voltar</button>
       </div>
+    </div>
     </div>
 
     <script src="main.js"></script>
