@@ -253,3 +253,34 @@ li {
   margin-top: 10px;
   display: block; /* Para garantir que a imagem não cause quebra de linha */
 }
+
+/* Cadastro Admin */
+.formContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.formContainer input {
+  width: 15rem;
+  height: 2rem;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+.formContainer select {
+  width: 15rem;
+  height: 2rem;
+  border-radius: var(--border-card);
+  text-align: center;
+  border: none;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.formContainer label {
+  font-size: 18px;
+}
+
