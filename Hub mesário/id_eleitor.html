@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Id log</title>
+    <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+    <div class="container">
+        <div class="janela">
+            <input type="text" name="id_eleitor" id="id_eleitor" placeholder="id do eleitor">
+            <button class="botao" onclick="buscarEleitores()">Buscar Eleitores</button>
+        </div>
+        <div id="eleitores"></div> 
+    </div>
+    <script>
+        function buscarEleitores() {
+            const idEleitor = document.getElementById('id_eleitor').value;
+            fetch(`http://localhost:8080/eleitor/${idEleitor}`)
+                .then(response => response.json())
+                .then(eleitor => {
+                    const eleitoresDiv = document.getElementById('eleitores');
+                    eleitoresDiv.innerHTML = '';
+
+                    const eleitorDiv = document.createElement('div');
+                    eleitorDiv.innerHTML = `
+                        <p>RA: ${eleitor.ra}, Nome: ${eleitor.nome}</p>
+                        <button onclick="liberarEleitor('${eleitor.ra}')">Liberar para Voto</button>
+                    `;
+                    eleitoresDiv.appendChild(eleitorDiv);
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar o eleitor:', error);
+                });
+        }
+
+        function liberarEleitor(ra) {
+            alert('Eleitor liberado para voto com sucesso.');
+            buscarEleitores();
+        }
+    </script>
+</body>
+</html>
