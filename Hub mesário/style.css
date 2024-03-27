@@ -134,6 +134,8 @@ input {
 
 h2 {
   text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 6px;
 }
 
 li {
@@ -252,4 +254,104 @@ li {
   max-height: 300px;
   margin-top: 10px;
   display: block; /* Para garantir que a imagem não cause quebra de linha */
+}
+
+/* Cadastro Admin */
+.formContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 5px;
+}
+
+.formContainer input {
+  width: 15rem;
+  height: 3rem;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+#cadastro {
+  width: 50%;
+  height: 40px;
+  background-color: var(--verde);
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: var(--border-card);
+  text-transform: uppercase;
+  font-weight: bold;
+  border: 1px solid var(--botao-fundo);
+  cursor: pointer;
+}
+
+.formContainer select {
+  width: 15rem;
+  height: 2rem;
+  border-radius: var(--border-card);
+  text-align: center;
+  border: none;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.formContainer label {
+  font-size: 18px;
+}
+
+.imageForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gerenciadorChapa {
+  border: 2px solid var(--botao-fundo);
+  width: 30%;
+  height: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: var(--border-card);
+  background-color: var(--bg);
+}
+
+.listaDeChapas {
+  display: flex;
+  width: 90%;
+  height: 50%;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.botaoExcluir {
+  background-color: var(--vermelho);
+  padding: 10px;
+  border-radius: var(--border-card);
+  border: none;
+  border: 1px solid var(--botao-fundo);
+  cursor: pointer;
+  text-transform: uppercase;
+  display: flex;
+  margin-bottom: 2rem;
+}
+
+.botaoVermelho {
+  background-color: var(--vermelho);
+}
+
+.botaoVermelho:hover, .botaoExcluir:hover {
+  background-color: #9b3b20;
+  transition: 300ms;
+}
+
+
+#searchInput::-webkit-search-cancel-button{
+  position:relative;
+  right:10px;
+}
+#searchInput {
+  padding-left: 20px;
 }
