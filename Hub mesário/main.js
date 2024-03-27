@@ -1,5 +1,5 @@
-function entrar() {
-  document.getElementById("entrar");
+function voltarHub() {
+  document.getElementById("voltarHub");
   location.href = "hub.html";
 }
 
@@ -23,10 +23,32 @@ function entrarCadastrarChapas() {
   location.href = "cadastroChapas.html";
 }
 
+function entrarGerenciadorChapas() {
+  document.getElementById("gerenciador_chapas");
+  location.href = "gerenciador_chapas.html";
+}
+
+function entrarHubChapas() {
+  document.getElementById("HubChapas");
+  location.href = "hub_chapas.html";
+}
+
 function entrarCadastrarEleitor() {
   document.getElementById("cadastrarEleitor");
   location.href = "cadastroEleitor.html";
 }
+
+function entrarHubEleitor() {
+  document.getElementById("HubEleitor");
+  location.href = "hub_eleitor.html";
+}
+
+
+function entrarGerenciadorEleitor() {
+  document.getElementById("gerenciador_eleitores");
+  location.href = "gerenciador_eleitores.html";
+}
+
 
 function entrarContagem() {
   document.getElementById("entrarContagem");
