@@ -1,30 +1,59 @@
  <!DOCTYPE html>
- <html lang="pt-br">
- <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Id log</title>
-    <link rel="stylesheet" href="style.css"/>
- </head>
- <body>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
     <div class="container">
+      <div class="janela">
+        <input
+          type="text"
+          name="id_eleitor"
+          id="id_eleitor"
+          placeholder="id do eleitor"
+          autofocus
+        />
+        <button class="botao" onclick="buscarEleitores()">
+          Buscar Eleitores
+        </button>
+      </div>
+      <div id="eleitores"></div>
+      <button id="voltarHub" class="botao sair" onclick="voltarHub()">
+        Voltar
+      </button>
+    </div>
 
-        <div class="janela">
-            <input type="text" name="id_eleitor" id="id_eleitor" placeholder="id do eleitor">
-            <button id="id_eleitor" class="botao" onclick="entrarUrna()">Entrar</button>
-        </div>
+    <script src="main.js"></script>
+    <script>
+      function buscarEleitores() {
+        const idEleitor = document.getElementById("id_eleitor").value;
+        fetch(`http://localhost:8080/eleitor/${idEleitor}`)
+          .then((response) => response.json())
+          .then((eleitor) => {
+            const eleitoresDiv = document.getElementById("eleitores");
+            eleitoresDiv.innerHTML = "";
 
-        <a class="voltar_button" href="hub.html" src>
-            <img src="image/icons/voltar_button.png" alt="Voltar">
-        </a>
-        <script>
-                window.addEventListener('DOMContentLoaded', (event) => {
-                     const n_chapInput = document.getElementById('id_eleitor');
-                    n_chapInput.addEventListener('input', function() {
-                     this.value = this.value.replace(/[^0-9]/g, '');
-        });
-    });
-        </script>
-        <script src="main.js"></script>
- </body>
- </html>
+            const eleitorDiv = document.createElement("div");
+            eleitorDiv.innerHTML = `
+                        <p>RA: ${eleitor.ra}, Nome: ${eleitor.nome}</p>
+                        <button onclick="liberarEleitor('${eleitor.ra}')">Liberar para Voto</button>
+                    `;
+            eleitoresDiv.appendChild(eleitorDiv);
+          })
+          .catch((error) => {
+            console.error("Erro ao carregar o eleitor:", error);
+          });
+      }
+
+      function liberarEleitor(ra) {
+        alert("Eleitor liberado para voto com sucesso.");
+        buscarEleitores();
+      }
+    </script>
+  </body>
+</html>
