@@ -9,87 +9,91 @@
   <body>
     <div class="container">
       <div class="janela">
-        <form id="registerForm">
-          <label for="register">Username:</label><br>
-          <input type="text" id="register" name="register"><br>
-          <label for="registerPassword">Password:</label><br>
-          <input type="password" id="registerPassword" name="registerPassword"><br><br>
-          <label for="role">Role:</label><br>
+        <form id="registerForm" class="formContainer">
+          <label for="register">Usuário:</label>
+          <input type="text" id="register" name="register" />
+          <label for="registerPassword">Senha:</label>
+          <input
+            type="password"
+            id="registerPassword"
+            name="registerPassword"
+          />
+          <label for="role">Role:</label>
           <select id="role" name="role">
-              <option value="ADMIN">Admin</option>
-              <option value="USER">User</option>
-          </select><br><br>
-          <button type="submit">Register</button>
-      </form>
-        <button class="botao" id="entrar" onclick="entrar()">Cadastrar</button>
-        <button id="hubSair" class="botao sair" onclick="hubSair()">Voltar</button>
+            <option value="ADMIN">Admin</option>
+            <option value="USER">User</option>
+          </select>
+          <button type="submit" class="botao">Cadastrar</button>
+        </form>
+        <button id="hubSair" class="botao sair" onclick="hubSair()">
+          Voltar
+        </button>
       </div>
     </div>
 
     <script src="main.js"></script>
     <script>
-    document.addEventListener("DOMContentLoaded", function() {
-    const loginForm = document.getElementById("loginForm");
-    const registerForm = document.getElementById("registerForm");
+      document.addEventListener("DOMContentLoaded", function () {
+        const loginForm = document.getElementById("loginForm");
+        const registerForm = document.getElementById("registerForm");
 
-    if (loginForm) {
-        loginForm.addEventListener("submit", function(event) {
+        if (loginForm) {
+          loginForm.addEventListener("submit", function (event) {
             event.preventDefault();
             const formData = new FormData(this);
             const data = {
-                login: formData.get("login"),
-                password: formData.get("password")
+              login: formData.get("login"),
+              password: formData.get("password"),
             };
             fetch("http://localhost:8080/auth/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(data)
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(data),
             })
-            .then(response => {
+              .then((response) => {
                 if (response.ok) {
-                    console.log("Login successful!");
+                  console.log("Login successful!");
                 } else {
-                    console.error("Login failed!");
+                  console.error("Login failed!");
                 }
-            })
-            .catch(error => {
+              })
+              .catch((error) => {
                 console.error("Error:", error);
-            });
-        });
-    }
+              });
+          });
+        }
 
-    if (registerForm) {
-        registerForm.addEventListener("submit", function(event) {
+        if (registerForm) {
+          registerForm.addEventListener("submit", function (event) {
             event.preventDefault();
             const formData = new FormData(this);
             const data = {
-                login: formData.get("register"),
-                password: formData.get("registerPassword"),
-                role: formData.get("role")
+              login: formData.get("register"),
+              password: formData.get("registerPassword"),
+              role: formData.get("role"),
             };
             fetch("http://localhost:8080/auth/register", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(data)
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(data),
             })
-            .then(response => {
+              .then((response) => {
                 if (response.ok) {
-                    console.log("Registration successful!");
+                  console.log("Registration successful!");
                 } else {
-                    console.error("Registration failed!");
+                  console.error("Registration failed!");
                 }
-            })
-            .catch(error => {
+              })
+              .catch((error) => {
                 console.error("Error:", error);
-            });
-        });
-    }
-});
-
+              });
+          });
+        }
+      });
     </script>
   </body>
 </html>
