@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fim</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>FIM</h1>
+    </div>
+
+    <script>
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+          window.location.href = "aguarde.html";
+        }
+      });
+    </script>
+      <script src="main.js"></script>
+      <script>
+        window.addEventListener("DOMContentLoaded", () => {
+          const params = new URLSearchParams(window.location.search);
+          const numeroChapa = params.get("numero");
+          const numeroChapaElement = document.getElementById("numero_chapa");
+    
+          if (numeroChapa === "BRANCO") {
+            numeroChapaElement.textContent = "Você selecionou BRANCO.";
+            document.getElementById("foto_chapa").style.display = "none";
+          } else if (numeroChapa) {
+            numeroChapaElement.textContent = `Você digitou o número da chapa: ${numeroChapa}.`;
+            fetchCandidato(numeroChapa);
+          } else {
+            numeroChapaElement.textContent =
+              "Nenhum número de chapa foi especificado.";
+          }
+        });
+    
+        window.addEventListener("keydown", function (e) {
+          if (e.key === "Tab") {
+            e.preventDefault();
+            const botao_confirma = document.querySelector(".botao_confirma");
+            const botao_cancela = document.querySelector(".botao_cancela");
+            if (botao_cancela === document.activeElement) {
+              botao_confirma.focus();
+            } else {
+              botao_cancela.focus();
+            }
+          }
+        });
+    
+        function fetchCandidato(numeroChapa) {
+          fetch("http://localhost:8090/candidato", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ numeroChapa: numeroChapa }),
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Erro ao buscar o candidato");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              const numeroChapaElement = document.getElementById("numero_chapa");
+              const fotoChapaElement = document.getElementById("foto_chapa");
+              numeroChapaElement.textContent = `Você digitou o número da chapa: ${numeroChapa}.`;
+              fotoChapaElement.src = data.foto;
+              fotoChapaElement.alt = data.nome;
+            })
+            .catch((error) => {
+              console.error("Erro:", error);
+              alert("Erro ao buscar o candidato");
+            });
+        }
+    
+        function confirmaVoto() {
+          const params = new URLSearchParams(window.location.search);
+          const numeroChapa = params.get("numero");
+    
+          fetch("http://localhost:8090/votar", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              chapa: numeroChapa === "BRANCO" ? 0 : parseInt(numeroChapa),
+            }),
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Erro ao enviar o voto");
+              }
+            })
+            .catch((error) => {
+              console.error("Erro:", error);
+              alert("Erro ao enviar o voto");
+            });
+        }
+    
+        function cancelarVoto() {
+          document.getElementById("cancelarvoto");
+          location.href = "voto.html";
+        }
+      </script>
+  </body>
+</html>

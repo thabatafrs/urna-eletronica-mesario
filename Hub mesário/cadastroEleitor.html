@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastro do Eleitor</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="janela">
+        <div class="formContainer">
+          <h2>Cadastro do Eleitor</h2>
+          <input type="text" name="ra" id="ra" placeholder="RA" />
+          <input type="text" name="nome" id="nome" placeholder="Nome" />
+
+          <div>
+            <label for="ID">ID:</label>
+            <span id="ID"></span>
+          </div>
+
+          <button onclick="adicionarRegistroEle()" class="botao">
+            Cadastrar
+          </button>
+
+          <button
+            type="button"
+            id="voltarHub"
+            class="botao sair"
+            onclick="voltarHub()"
+          >
+            voltar
+          </button>
+        </div>
+
+        <ul id="registros"></ul>
+      </div>
+    </div>
+
+    <script src="main.js"></script>
+    <script>
+      var idCounter = 1;
+
+      function adicionarRegistroEle() {
+        var raInput = document.getElementById("ra");
+        var nomeInput = document.getElementById("nome");
+        var raValue = raInput.value;
+        var nomeValue = nomeInput.value;
+
+        if (raValue && nomeValue) {
+          var eleitor = {
+            ra: raValue,
+            nome: nomeValue,
+          };
+
+          fetch("http://localhost:8080/eleitor", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              mode: "no-cors",
+            },
+            body: JSON.stringify(eleitor),
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Erro ao adicionar eleitor");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              alert("Eleitor adicionado com sucesso. ID: " + data.id);
+            })
+            .catch((error) => {
+              console.error("Erro:", error);
+              alert("Erro ao adicionar eleitor. Por favor, tente novamente.");
+            });
+
+          document.getElementById("ID").textContent = "";
+        } else {
+          alert("Por favor, preencha todos os campos.");
+        }
+      }
+    </script>
+  </body>
+</html>

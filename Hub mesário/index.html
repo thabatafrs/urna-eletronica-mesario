@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Urna</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="janela">
+        <input type="text" name="usuario" id="usuario" placeholder="Usuário" />
+        <input type="password" name="senha" id="senha" placeholder="Senha" />
+        <button class="botao" id="entrar" onclick="login()">Entrar</button>
+        <button class="botao" id="cadastrar" onclick="cadastro()">
+          Cadastro
+        </button>
+        <p id="error-message" class="error-message"></p>
+      </div>
+    </div>
+
+    <script src="main.js"></script>
+    <script>
+      function login() {
+        const usuario = document.getElementById("usuario").value;
+        const senha = document.getElementById("senha").value;
+
+        const data = {
+          login: usuario,
+          password: senha,
+        };
+
+        fetch("http://localhost:8080/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => {
+            if (response.ok) {
+              console.log("Login successful!");
+              window.location.href = "hub.html";
+            } else {
+              console.error("Login failed!");
+              document.getElementById("error-message").innerText =
+                "Usuário ou senha incorretos";
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            document.getElementById("error-message").innerText =
+              "Erro ao tentar fazer login";
+          });
+      }
+
+      function cadastro() {
+        console.log("Redirecionando para a página de cadastro...");
+        window.location.href = "cadastroAdmin.html";
+      }
+    </script>
+
+  </body>
+</html>
+
