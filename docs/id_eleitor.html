@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Id log</title>
+    <link rel="stylesheet" href="styleMesario.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="janela">
+        <input
+          type="search"
+          name="id_eleitor"
+          id="id_eleitor"
+          placeholder="id do eleitor"
+          autofocus
+          class="searchInput"
+        />
+        <button class="botao" onclick="buscarEleitores()">
+          Buscar Eleitores
+        </button>
+        <div id="eleitores"></div>
+        <button id="voltarHub" class="botao sair" onclick="voltarHub()">
+          Voltar
+        </button>
+      </div>
+    </div>
+
+    <script src="main.js"></script>
+    <script>
+      function buscarEleitores() {
+        const idEleitor = document.getElementById("id_eleitor").value;
+        fetch(`http://localhost:8080/eleitor/${idEleitor}`)
+          .then((response) => response.json())
+          .then((eleitor) => {
+            const eleitoresDiv = document.getElementById("eleitores");
+            eleitoresDiv.innerHTML = "";
+
+            const eleitorDiv = document.createElement("div");
+            eleitorDiv.innerHTML = `
+                        <section class="liberarVoto">
+                        <p>RA: ${eleitor.ra}, Nome: ${eleitor.nome}</p>
+                        <button class="botao" onclick="liberarEleitor('${eleitor.ra}')">Liberar Voto</button>
+                        </section>
+                    `;
+            eleitoresDiv.appendChild(eleitorDiv);
+          })
+          .catch((error) => {
+            console.error("Erro ao carregar o eleitor:", error);
+          });
+      }
+
+      function liberarEleitor(ra) {
+        alert("Eleitor liberado para voto com sucesso.");
+        entrarUrna();
+        window.location.reload();
+      }
+
+      function entrarUrna() {
+        const newWindow = window.open(
+          "voto.html",
+          "_blank",
+          "width=1360,height=768"
+        );
+        if (newWindow) {
+          const left = 1360;
+          const top = 2341;
+          newWindow.moveTo(left, top);
+        } else {
+          alert(
+            "Pop-up bloqueado. Por favor, habilite os pop-ups para abrir a página em uma nova janela."
+          );
+        }
+      }
+    </script>
+  </body>
+</html>
