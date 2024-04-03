@@ -22,6 +22,15 @@
 
     <script src="Hub mesário/main.js"></script>
     <script>
+      // Entrar ao clicar enter
+      var input = document.getElementById("senha");
+      input.addEventListener("keyup", function (event) {
+        if (event.keyCode === 13) {
+          event.preventDefault();
+          document.getElementById("entrar").click();
+        }
+      });
+
       function login() {
         const usuario = document.getElementById("usuario").value;
         const senha = document.getElementById("senha").value;
@@ -39,13 +48,17 @@
           body: JSON.stringify(data),
         })
           .then((response) => {
-            if (response.ok) {
-              console.log("Login successful!");
-              window.location.href = "hub.html";
-            } else {
+            if (!response.ok) {
               console.error("Login failed!");
               document.getElementById("error-message").innerText =
-                "Usuário ou senha incorretos";
+                "Usuário ou senha incorretos!";
+            } else if (senha == "" || usuario == "") {
+              console.error("Login failed!");
+              document.getElementById("error-message").innerText =
+                "Digite o usuário e a senha!";
+            } else {
+              console.log("Login successful!");
+              window.location.href = "hub.html";
             }
           })
           .catch((error) => {
