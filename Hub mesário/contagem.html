@@ -9,11 +9,10 @@
   <body>
     <div class="container">
       <button class="botao zerar" onclick="zerarLista()">Zerar Urna</button>
-
       <div class="janela contagem">
         <div class="chapa">
           <h2>Votos</h2>
-          <ul class="listaVotos" id="listaVotos"></ul>
+          <ul id="lista-votos"></ul>
         </div>
       </div>
     </div>
@@ -28,7 +27,7 @@
           method: "DELETE",
         });
         console.log("zerar urna");
-        window.location.reload();
+        window.location.reload;
       }
       // Função para fazer uma solicitação GET para o endpoint e renderizar a lista
     function carregarListaVotos() {
@@ -51,6 +50,6 @@
 
     // Chama a função para carregar a lista de votos quando a página é carregada
     document.addEventListener('DOMContentLoaded', carregarListaVotos);
-    </script>
-  </body>
+  </script>
+</body>
 </html>
