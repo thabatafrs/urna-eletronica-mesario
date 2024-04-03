@@ -62,6 +62,10 @@ input {
   transition: 300ms;
 }
 
+.error-message {
+  margin-top: 5px;
+}
+
 /* HUB */
 
 .sair {
