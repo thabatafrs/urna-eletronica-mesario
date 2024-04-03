@@ -64,6 +64,8 @@
               if (numeroChapaURL === "BRANCO") {
                 numeroChapaDIV.textContent = "Você selecionou BRANCO.";
                 document.getElementById("foto_chapa").style.display = "none";
+                document.getElementById("confirma").style.display = "none";
+                document.getElementById("cancela").style.width = "100%";
               } else if (numeroChapaURL === item.chapa) {
                 const nome = item.nome;
                 const texto = `<h3>Voto para: ${nome}</h3>`;
@@ -79,40 +81,35 @@
         const object = { chapa: numeroChapaURL };
         console.log(object);
 
-        const response = await fetch("http://localhost:8080/voto", {
+        const enviarVoto = await fetch("http://localhost:8080/voto", {
           method: "POST",
-          contentType: "application/json",
-          accept: "/*",
-          body: JSON.stringify({
-            chapa: numeroChapaURL === "BRANCO" ? 0 : parseInt(object),
-          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(object),
         });
 
-        const responseText = await response.text();
+        const responseText = await enviarVoto.text();
         console.log(responseText); // logs 'OK'
+
+        liberarUrna();
+        location.href = "FIM.html";
       }
 
-      //   function confirmaVoto() {
-      //     const params = new URLSearchParams(window.location.search);
-      //     const numeroChapa = params.get('numero');
-
-      //     fetch('http://localhost:8090/votar', {
-      //         method: 'POST',
-      //         headers: {
-      //             'Content-Type': 'application/json'
-      //         },
-      //         body: JSON.stringify({ chapa: numeroChapa === 'BRANCO' ? 0 : parseInt(numeroChapa) })
-      //     })
-      //     .then(response => {
-      //         if (!response.ok) {
-      //             throw new Error('Erro ao enviar o voto');
-      //         }
-      //     })
-      //     .catch(error => {
-      //         console.error('Erro:', error);
-      //         alert('Erro ao enviar o voto');
-      //     });
-      // }
+      async function liberarUrna() {
+        fetch("http://localhost:8080/liberacao_urna?isUrnaLiberada=true", {
+          method: "POST",
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Erro ao enviar o voto");
+            }
+          })
+          .catch((error) => {
+            console.error("Erro:", error);
+            alert("Erro ao enviar o voto");
+          });
+      }
 
       function cancelarVoto() {
         document.getElementById("cancelarvoto");
