@@ -24,6 +24,7 @@
             <option value="USER">User</option>
           </select>
           <button type="submit" class="botao">Cadastrar</button>
+          <p id="error-message" class="error-message"></p>
         </form>
         <button id="hubSair" class="botao sair" onclick="hubSair()">
           Voltar
@@ -33,6 +34,7 @@
 
     <script src="main.js"></script>
     <script>
+      
       document.addEventListener("DOMContentLoaded", function () {
         const loginForm = document.getElementById("loginForm");
         const registerForm = document.getElementById("registerForm");
@@ -84,8 +86,12 @@
               .then((response) => {
                 if (response.ok) {
                   console.log("Registration successful!");
+                  alert("Cadastro feito com sucesso!");
+                  location.href = "index.html";
                 } else {
                   console.error("Registration failed!");
+                  document.getElementById("error-message").innerText =
+                    "Campos inválidos!";
                 }
               })
               .catch((error) => {
