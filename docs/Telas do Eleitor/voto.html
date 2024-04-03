@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Urna Eletrônica</title>
+    <link rel="stylesheet" href="styleEleitor.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="janela">
+        <input
+          type="text"
+          name="n_chap"
+          id="n_chap"
+          placeholder="XXXX"
+          autofocus
+          tabindex="1"
+        />
+        <p>n° da chapa</p>
+        <button class="botao_branco" tabindex="2" onclick="enviarNumeroChapa()">
+          BRANCO
+        </button>
+      </div>
+    </div>
+
+    <script>
+      function enviarNumeroChapa() {
+        const n_chapInput = document.getElementById("n_chap");
+        const numeroChapa = n_chapInput.value.trim() || "BRANCO";
+        const url =
+          numeroChapa === "BRANCO"
+            ? "confirmar.html?numero=BRANCO"
+            : `confirmar.html?numero=${encodeURIComponent(numeroChapa)}`;
+        window.location.href = url;
+      }
+
+      window.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          enviarNumeroChapa();
+        }
+      });
+    </script>
+  </body>
+</html>
