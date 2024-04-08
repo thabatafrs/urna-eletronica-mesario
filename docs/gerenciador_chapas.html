@@ -31,17 +31,23 @@
         <hr />
         <div id="candidatos" class="listaDeChapas"></div>
         <button
-          id="voltarHub"
+          id="DeletarTodos"
           class="botao botaoVermelho"
-          onclick="voltarHub()"
+          onclick="deletarTodosCandidatos()"
         >
-          Voltar
+          Deletar todos
         </button>
+        <button
+        id="voltarHub"
+        class="botao botaoVermelho"
+        onclick="voltarHubChapas()"
+        >
+        Voltar
+      </button>
       </div>
     </div>
     <script src="main.js"></script>
     <script>
-      // Buscar ao clicar enter
       var input = document.getElementById("searchInput");
       input.addEventListener("keyup", function (event) {
         if (event.keyCode === 13) {
@@ -107,6 +113,25 @@
             })
             .catch((error) => {
               console.error("Erro ao excluir candidato:", error);
+            });
+        }
+      }
+
+      function deletarTodosCandidatos() {
+        if (confirm("Tem certeza que deseja excluir todos os candidatos?")) {
+          fetch("http://localhost:8080/candidato", {
+            method: "DELETE",
+          })
+            .then((response) => {
+              if (response.ok) {
+                console.log("Todos os candidatos foram excluídos com sucesso.");
+                carregarCandidatos();
+              } else {
+                console.error("Erro ao excluir todos os candidatos:", response.status);
+              }
+            })
+            .catch((error) => {
+              console.error("Erro ao excluir todos os candidatos:", error);
             });
         }
       }

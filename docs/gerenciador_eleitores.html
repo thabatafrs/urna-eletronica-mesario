@@ -31,9 +31,16 @@
         <hr />
         <div id="eleitores" class="listaDeChapas"></div>
         <button
+          id="deletarTodosEleitores"
+          class="botao botaoVermelho"
+          onclick="deletarTodosEleitores()"
+        >
+          Deletar todos
+        </button>
+        <button
           id="voltarHub"
           class="botao botaoVermelho"
-          onclick="voltarHub()"
+          onclick="voltarHubEleitores()"
         >
           voltar
         </button>
@@ -108,6 +115,25 @@
             })
             .catch((error) => {
               console.error("Erro ao excluir eleitor:", error);
+            });
+        }
+      }
+
+      function deletarTodosEleitores() {
+        if (confirm("Tem certeza que deseja excluir todos os eleitores?")) {
+          fetch("http://localhost:8080/eleitor", {
+            method: "DELETE",
+          })
+            .then((response) => {
+              if (response.ok) {
+                console.log("Todos os eleitores foram excluídos com sucesso.");
+                carregarEleitores();
+              } else {
+                console.error("Erro ao excluir todos os eleitores:", response.status);
+              }
+            })
+            .catch((error) => {
+              console.error("Erro ao excluir todos os eleitores:", error);
             });
         }
       }

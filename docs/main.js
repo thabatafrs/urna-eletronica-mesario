@@ -3,6 +3,16 @@ function voltarHub() {
   location.href = "hub.html";
 }
 
+function voltarHubChapas() {
+  document.getElementById("voltarHubChapas");
+  location.href = "hub_chapas.html";
+}
+
+function voltarHubEleitores() {
+  document.getElementById("voltarHubEleitores");
+  location.href = "hub_eleitor.html";
+}
+
 function cadastrar() {
   document.getElementById("cadastrar");
   location.href = "cadastroAdmin.html";
