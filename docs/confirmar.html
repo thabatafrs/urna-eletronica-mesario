@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Confirmação de Voto</title>
+    <link rel="stylesheet" href="styleEleitor.css" />
+    <script
+    src="https://kit.fontawesome.com/877e197de7.js"
+    crossorigin="anonymous"
+  ></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="janela_confirma">
+        <div class="foto do candidato">
+          <img id="foto_chapa" src="placeholder.jpg" alt="Foto da Chapa" />
+        </div>
+
+        <p id="numero_chapa"></p>
+
+        <div class="botoes_container">
+          <button
+            class="botao_confirma"
+            id="confirma"
+            tabindex="1"
+            onclick="confirmaVoto()"
+          >
+            confirmar
+          </button>
+          <button
+            class="botao_cancela"
+            id="cancela"
+            tabindex="2"
+            onclick="cancelarVoto()"
+          >
+            cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="main.js"></script>
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const numeroChapaURL = params.get("numero");
+      const numeroChapaDIV = document.getElementById("numero_chapa");
+
+      window.addEventListener("keydown", function (e) {
+        if (e.key === "Tab") {
+          e.preventDefault();
+          const botao_confirma = document.querySelector(".botao_confirma");
+          const botao_cancela = document.querySelector(".botao_cancela");
+          if (botao_cancela === document.activeElement) {
+            botao_confirma.focus();
+          } else {
+            botao_cancela.focus();
+          }
+        }
+      });
+
+      function getChapaData() {
+        const data = fetch("http://localhost:8080/candidato")
+          .then((res) => res.json())
+          .then((data) => {
+            const NumeroDaChapa = data.map((item) => {
+              if (numeroChapaURL === "BRANCO") {
+                numeroChapaDIV.textContent = "Você selecionou BRANCO.";
+                document.getElementById("foto_chapa").style.display = "none";
+                document.getElementById("confirma").style.display = "none";
+                document.getElementById("cancela").style.width = "100%";
+              } else if (numeroChapaURL === item.chapa) {
+                const nome = item.nome;
+                const texto = `<h3>Voto para: ${nome}</h3>`;
+                document.querySelector("#numero_chapa").innerHTML += texto;
+              }
+            });
+          });
+      }
+
+      getChapaData();
+
+      async function confirmaVoto() {
+        const object = { chapa: numeroChapaURL };
+        console.log(object);
+
+        const enviarVoto = await fetch("http://localhost:8080/voto", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(object),
+        });
+
+        const responseText = await enviarVoto.text();
+        console.log(responseText); // logs 'OK'
+
+        liberarUrna();
+        location.href = "FIM.html";
+      }
+
+      async function liberarUrna() {
+        fetch("http://localhost:8080/liberacao_urna?isUrnaLiberada=true", {
+          method: "POST",
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Erro ao enviar o voto");
+            }
+          })
+          .catch((error) => {
+            console.error("Erro:", error);
+            alert("Erro ao enviar o voto");
+          });
+      }
+
+      function cancelarVoto() {
+        document.getElementById("cancelarvoto");
+        location.href = "voto.html";
+      }
+    </script>
+  </body>
+</html>
