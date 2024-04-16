@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Id log</title>
+    <link rel="stylesheet" href="styleMesario.css" />
+    <script
+      src="https://kit.fontawesome.com/877e197de7.js"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      .buscarBTN {
+        width: 40%;
+      }
+
+      .searchInput {
+        width: 40%;
+      }
+
+      #eleitorVotando {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="janela" id="janela">
+        <input
+          type="search"
+          name="id_eleitor"
+          id="id_eleitor"
+          placeholder="id do eleitor"
+          autofocus
+          class="searchInput"
+        />
+        <button class="botao buscarBTN" onclick="buscarEleitores()">
+          Buscar Eleitores
+        </button>
+        <div id="eleitores"></div>
+        <button id="voltarHub" class="botao sair" onclick="voltarHub()">
+          <i class="fa-solid fa-circle-chevron-left"></i> Voltar
+        </button>
+      </div>
+      <div id="eleitorVotando">
+        <span class="loader"></span>
+        <h1>Eleitor votando...</h1>
+        <button id="voltarHub" class="botao sair" onclick="voltarHub()">
+          <i class="fa-solid fa-circle-chevron-left"></i> Voltar para o hub
+        </button>
+      </div>
+    </div>
+
+    <script src="mainMesario.js"></script>
+    <script>
+      function buscarEleitores() {
+        const idEleitor = document.getElementById("id_eleitor").value;
+        fetch(`http://localhost:8080/eleitor/${idEleitor}`)
+          .then((response) => response.json())
+          .then((eleitor) => {
+            console.log(eleitor);
+            const eleitorRA = eleitor.ra;
+            console.log(eleitorRA);
+
+            if (typeof eleitorRA != "undefined") {
+              const eleitoresDiv = document.getElementById("eleitores");
+              eleitoresDiv.innerHTML = "";
+
+              const eleitorDiv = document.createElement("div");
+              eleitorDiv.innerHTML = `
+                        <section class="liberarVoto">
+                        <p>RA: ${eleitor.ra}, Nome: ${eleitor.nome}</p>
+                        <button class="botao" onclick="liberarEleitor('${eleitor.ra}')">Liberar Voto</button>
+                        </section>
+                    `;
+              eleitoresDiv.appendChild(eleitorDiv);
+            } else {
+              window.alert("RA não encontrado!");
+              window.location.reload();
+            }
+          })
+          .catch((error) => {
+            console.error("Erro ao carregar o eleitor:", error);
+          });
+      }
+
+      function liberarEleitor(ra) {
+        alert("Eleitor liberado para voto com sucesso.");
+
+        fetch("http://localhost:8080/liberacao_urna?isUrnaLiberada=true", {
+          method: "POST",
+        })
+          .then((response) => {
+            if (!response.ok) {
+              window.alert("liberada");
+            }
+          })
+          .catch((error) => {
+            window.alert("erro");
+          });
+
+        console.log(
+          "Mensagem 'urnaLiberada' enviada para a segunda aplicação."
+        );
+        window.location.reload();
+        window.postMessage("urnaLiberada", "*");
+      }
+
+      function verificarUrnaLiberada() {
+        const janela = document.getElementById("container");
+
+        fetch("http://localhost:8080/liberacao_urna?isUrnaLiberada=true", {
+          method: "GET",
+        })
+          .then((response) => response.json())
+
+          .then((data) => {
+            let urnaLiberada = data;
+            console.log(urnaLiberada);
+            if (urnaLiberada === false) {
+              console.log("urna bloqueada");
+              setTimeout(verificarUrnaLiberada, 5000);
+              // window.location.href = "voto.html";
+              document.getElementById("janela").style.display = "flex";
+              document.getElementById("eleitorVotando").style.display = "none";
+            } else {
+              setTimeout(verificarUrnaLiberada, 5000);
+              console.log("urna liberada");
+              document.getElementById("janela").style.display = "none";
+            }
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }
+
+      verificarUrnaLiberada();
+    </script>
+  </body>
+</html>
