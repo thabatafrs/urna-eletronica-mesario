@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Confirmação de Voto</title>
+    <link rel="stylesheet" href="styleEleitor.css" />
+    <script
+      src="https://kit.fontawesome.com/877e197de7.js"
+      crossorigin="anonymous"
+    ></script>
+        <style>
+      img {
+        width: 40%;
+        margin: auto;
+        display: block;
+        padding: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="janela_confirma">
+        <div class="foto do candidato">
+          <img id="foto_chapa" src="" alt="Foto da Chapa" />
+        </div>
+
+        <p id="numero_chapa"></p>
+        <div id="mensagem"></div>
+        <div class="botoes_container">
+          <button
+            class="botao_confirma"
+            id="confirma"
+            tabindex="1"
+            onclick="confirmaVoto()"
+          >
+            confirmar
+          </button>
+          <button
+            class="botao_cancela"
+            id="cancela"
+            tabindex="2"
+            onclick="cancelarVoto()"
+          >
+            cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="mainEleitor.js"></script>
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const numeroChapaURL = params.get("numero");
+      const numeroChapaDIV = document.getElementById("numero_chapa");
+
+      window.addEventListener("keydown", function (e) {
+        if (e.key === "Tab") {
+          e.preventDefault();
+          const botao_confirma = document.querySelector(".botao_confirma");
+          const botao_cancela = document.querySelector(".botao_cancela");
+          if (botao_cancela === document.activeElement) {
+            botao_confirma.focus();
+          } else {
+            botao_cancela.focus();
+          }
+        }
+      });
+
+      async function getChapaData() {
+        if (
+          numeroChapaURL === "BRANCO" ||
+          numeroChapaURL === null ||
+          isNaN(parseInt(numeroChapaURL))
+        ) {
+          numeroChapaDIV.textContent = "BRANCO";
+          document.getElementById("foto_chapa").style.display = "none";
+        } else {
+          const response = await fetch("http://localhost:8080/candidato");
+          const data = await response.json();
+          let chapaReconhecida = false;
+
+          data.forEach(async (item) => {
+            console.log(data);
+            const imagem = item.foto;
+            const imgDiv = document.getElementById("foto_chapa");
+            if (numeroChapaURL === item.chapa) {
+              chapaReconhecida = true;
+              const nome = item.nome;
+              const texto = `<h3>Voto para: ${nome}</h3>`;
+              document.querySelector("#numero_chapa").innerHTML += texto;
+
+              imgDiv.setAttribute("src", "data:image/jpg;base64," + imagem);
+            }
+          });
+
+          if (!chapaReconhecida) {
+            numeroChapaDIV.textContent = "Chapa não cadastrada";
+            document.getElementById("foto_chapa").style.display = "none";
+            document.getElementById("confirma").style.display = "none";
+            document.getElementById("cancela").style.width = "100%";
+            document.getElementById("cancela").innerHTML =
+              "Voltar para votação";
+          }
+        }
+      }
+
+      getChapaData();
+
+      async function confirmaVoto() {
+        let chapaEnviada;
+        if (
+          numeroChapaURL === "BRANCO" ||
+          numeroChapaURL === null ||
+          isNaN(parseInt(numeroChapaURL))
+        ) {
+          chapaEnviada = 0;
+        } else {
+          chapaEnviada = parseInt(numeroChapaURL);
+        }
+
+        const object = { chapa: chapaEnviada };
+        console.log(object);
+
+        const enviarVoto = await fetch("http://localhost:8080/voto", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(object),
+        });
+
+        const responseText = await enviarVoto.text();
+        console.log(responseText);
+
+        liberarUrna();
+        location.href = "FIM.html";
+      }
+
+      async function liberarUrna() {
+        fetch("http://localhost:8080/liberacao_urna?isUrnaLiberada=true", {
+          method: "POST",
+        })
+          .then((response) => {
+            if (!response.ok) {
+              document.getElementById("mensagem").innerHTML =
+                "<p>Voto enviado com sucesso!</p>";
+            }
+          })
+          .catch((error) => {
+            console.error("Erro:", error);
+            document.getElementById("mensagem").innerHTML =
+              "<p>Erro ao enviar o voto. Por favor, tente novamente.</p>";
+          });
+      }
+
+      function cancelarVoto() {
+        document.getElementById("cancelarvoto");
+        location.href = "index.html";
+      }
+
+      function verificarUrnaLiberada() {
+        fetch("http://localhost:8080/liberacao_urna?isUrnaLiberada=true", {
+          method: "GET",
+        })
+          .then((response) => response.json())
+
+          .then((data) => {
+            let urnaLiberada = data;
+            console.log(urnaLiberada);
+            setTimeout(verificarUrnaLiberada, 2000);
+            
+          function exibirMensagem(mensagem) {
+            document.getElementById("mensagem").innerHTML = mensagem;
+          }
+
+            if (urnaLiberada === false) {
+              console.log("urna bloqueada");
+              exibirMensagem("Urna foi bloqueada. Sem autorização para voto!");
+              setTimeout(function() {
+                window.location.href = "index.html";
+              }, 4000); 
+              document.getElementById("foto_chapa").style.display = "none";
+              document.getElementById("numero_chapa").style.display = "none";
+              document.getElementById("confirma").style.display = "none";
+              document.getElementById("cancela").style.display = "none";
+            }
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }
+
+      verificarUrnaLiberada();
+    </script>
+  </body>
+</html>
