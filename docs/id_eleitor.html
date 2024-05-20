@@ -72,7 +72,8 @@
           }
         })
         .catch((error) => {
-          console.error("Erro ao carregar o eleitor:", error);
+          window.alert("Erro ao carregar o eleitor!");
+          window.location.reload();
         });
     }
 
